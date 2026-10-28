@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHIRENDRA.FUN — Spend Elon Musk's Money</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js for reactive state management -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-indigo-500 selection:text-white" x-data="gameApp()">
+
+    <!-- HEADER -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="text-xl sm:text-2xl font-black tracking-tight bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
+                    DHIRENDRA.FUN
+                </span>
+                <span class="hidden sm:inline-block px-2.5 py-0.5 text-xs font-bold bg-indigo-50 text-indigo-700 rounded-full border border-indigo-100">
+                    Billionaire Simulator
+                </span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button @click="shareResult()" class="text-xs sm:text-sm font-semibold text-slate-600 hover:text-indigo-600 transition flex items-center space-x-1 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-xl">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3.316 3.316 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3.316 3.316 0 00-5.368-2.684z"/></svg>
+                    <span>Share</span>
+                </button>
+                <button @click="confirmReset()" class="text-xs sm:text-sm font-semibold text-rose-600 hover:text-rose-700 transition flex items-center space-x-1 bg-rose-50 hover:bg-rose-100 px-3 py-1.5 rounded-xl">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    <span>Reset</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-900 text-white py-14 sm:py-20 px-4">
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-bold mb-5 uppercase tracking-wider">
+                <span>Interactive Economy Game</span>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-black tracking-tight mb-3">
+                Spend Elon Musk's Money
+            </h1>
+            <p class="text-sm sm:text-lg text-slate-300 max-w-xl mx-auto mb-6 font-light">
+                “You have Elon Musk’s fortune of $500 Billion. What would you buy or build?”
+            </p>
+            <div class="flex justify-center mb-8">
+                <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-indigo-500 shadow-xl shadow-indigo-500/30">
+                    <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=400&q=80" alt="Elon Musk" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <div>
+                <a href="#shop" class="inline-flex items-center justify-center px-6 py-3 text-sm sm:text-base font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl shadow-lg shadow-indigo-600/30 transition transform hover:-translate-y-0.5">
+                    Start Spending
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- STICKY BALANCE PANEL -->
+    <div class="sticky top-16 z-30 bg-emerald-600 text-white shadow-md transition-all duration-300" :class="{'bg-emerald-500 shadow-lg': isAnimated}">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left">
+            <div class="mb-1 sm:mb-0">
+                <span class="text-xs uppercase tracking-widest text-emerald-100 font-bold">Elon Musk's Fortune</span>
+            </div>
+            <div class="text-2xl sm:text-4xl font-black tracking-tight my-1 sm:my-0" x-text="formatMoney(balance)"></div>
+            <div class="text-xs sm:text-sm text-emerald-100 flex space-x-3">
+                <span>Spent: <strong class="text-white" x-text="formatMoney(totalSpent)"></strong></span>
+                <span>•</span>
+                <span>Items: <strong class="text-white" x-text="totalItemsCount"></strong></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN SHOPPING SECTION -->
+    <main id="shop" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- SEARCH & FILTERS -->
+        <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 mb-6 space-y-4">
+            <div class="flex flex-col md:flex-row gap-3 items-center justify-between">
+                <!-- Search -->
+                <div class="relative w-full md:w-80">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </span>
+                    <input type="text" x-model="searchQuery" placeholder="Search products..." class="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition">
+                </div>
+                <!-- Sorting -->
+                <div class="flex items-center space-x-2 w-full md:w-auto justify-end">
+                    <span class="text-xs font-semibold text-slate-500 uppercase">Sort:</span>
+                    <select x-model="sortBy" class="bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="default">Default</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A to Z</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="flex overflow-x-auto space-x-2 pt-1 pb-1 no-scrollbar">
+                <template x-for="cat in categories" :key="cat.id">
+                    <button @click="selectedCategory = cat.id" 
+                        class="px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition"
+                        :class="selectedCategory === cat.id ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'"
+                        x-text="cat.name">
+                    </button>
+                </template>
+            </div>
+        </div>
+
+        <!-- PRODUCTS GRID -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            <template x-for="product in filteredProducts" :key="product.id">
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                    <!-- Image -->
+                    <div class="h-44 bg-slate-100 relative overflow-hidden flex items-center justify-center p-3">
+                        <img :src="product.image" :alt="product.name" class="w-full h-full object-cover rounded-xl shadow-inner transform hover:scale-105 transition duration-300">
+                        <span class="absolute top-2.5 left-2.5 px-2 py-0.5 bg-white/90 backdrop-blur-md rounded-lg text-[10px] font-bold uppercase tracking-wider text-slate-700 shadow-sm" x-text="product.categoryName"></span>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-sm mb-1" x-text="product.name"></h3>
+                            <div class="text-emerald-600 font-extrabold text-base mb-1.5" x-text="formatMoney(product.price)"></div>
+                            <p class="text-[11px] text-slate-500 mb-3 line-clamp-2" x-text="product.description"></p>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="space-y-2.5 pt-2.5 border-t border-slate-100">
+                            <div class="flex items-center justify-between">
+                                <button @click="sellItem(product)" 
+                                    class="px-3 py-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 font-bold rounded-xl text-xs transition disabled:opacity-30 disabled:cursor-not-allowed"
+                                    :disabled="getQuantity(product.id) === 0">
+                                    Sell
+                                </button>
+                                <input type="number" min="0" @change="setQuantity(product, $event.target.value)" :value="getQuantity(product.id)" class="w-14 text-center font-bold text-xs bg-slate-50 border border-slate-200 rounded-xl py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <button @click="buyItem(product)" 
+                                    class="px-3 py-1.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 font-bold rounded-xl text-xs transition disabled:opacity-30 disabled:cursor-not-allowed"
+                                    :disabled="balance < product.price">
+                                    Buy
+                                </button>
+                            </div>
+                            <div class="text-right text-[10px] text-slate-400 font-medium">
+                                Total: <span class="text-slate-700 font-bold" x-text="formatMoney(getQuantity(product.id) * product.price)"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- EMPTY STATE -->
+        <template x-if="filteredProducts.length === 0">
+            <div class="text-center py-16 bg-white rounded-2xl border border-slate-200 mt-4">
+                <h3 class="text-base font-bold text-slate-700 mb-1">No products found</h3>
+                <p class="text-xs text-slate-400">Try searching with a different keyword or category.</p>
+            </div>
+        </template>
+
+        <!-- SHOPPING RECEIPT -->
+        <div class="mt-12 bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 shadow-sm">
+            <div class="flex items-center justify-between mb-5 pb-3 border-b border-slate-200">
+                <div>
+                    <h2 class="text-lg sm:text-xl font-black text-slate-900">Your Shopping Receipt</h2>
+                    <p class="text-xs text-slate-500">Items bought with Elon's fortune.</p>
+                </div>
+                <button @click="confirmReset()" class="text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 px-3 py-1.5 rounded-xl transition">
+                    Clear Receipt
+                </button>
+            </div>
+
+            <template x-if="cartItems.length > 0">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400">
+                                <th class="py-2.5 px-3">Item</th>
+                                <th class="py-2.5 px-3 text-center">Qty</th>
+                                <th class="py-2.5 px-3 text-right">Unit Price</th>
+                                <th class="py-2.5 px-3 text-right">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-xs sm:text-sm">
+                            <template x-for="item in cartItems" :key="item.id">
+                                <tr>
+                                    <td class="py-3 px-3 font-semibold text-slate-800 flex items-center space-x-2.5">
+                                        <img :src="item.image" class="w-8 h-8 object-cover rounded-lg border border-slate-200" alt="">
+                                        <span x-text="item.name"></span>
+                                    </td>
+                                    <td class="py-3 px-3 text-center font-bold text-indigo-600" x-text="item.qty"></td>
+                                    <td class="py-3 px-3 text-right text-slate-600" x-text="formatMoney(item.price)"></td>
+                                    <td class="py-3 px-3 text-right font-bold text-slate-900" x-text="formatMoney(item.qty * item.price)"></td>
+                                </tr>
+                            </template>
+                        </tbody>
+                        <tfoot>
+                            <tr class="border-t-2 border-slate-200 font-bold text-sm">
+                                <td colspan="3" class="py-3 px-3 text-right text-slate-600 uppercase text-xs">Total Spent:</td>
+                                <td class="py-3 px-3 text-right text-emerald-600 text-base" x-text="formatMoney(totalSpent)"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </template>
+            <template x-if="cartItems.length === 0">
+                <div class="text-center py-10 text-slate-400 text-xs sm:text-sm">
+                    <p>No items bought yet. Start shopping above!</p>
+                </div>
+            </template>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-10 mt-16 border-t border-slate-800 text-center">
+        <div class="max-w-7xl mx-auto px-4 space-y-3 text-xs">
+            <div class="text-base font-extrabold text-white tracking-tight">DHIRENDRA.FUN</div>
+            <p class="max-w-sm mx-auto">
+                DHIRENDRA.FUN — A fun billionaire spending simulation. Not affiliated with Elon Musk or Tesla.
+            </p>
+            <p class="text-slate-500 pt-2">© 2026 DHIRENDRA.FUN. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPT -->
+    <script>
+        function gameApp() {
+            return {
+                startingBalance: 500000000000,
+                balance: 500000000000,
+                totalSpent: 0,
+                inventory: {},
+                searchQuery: '',
+                selectedCategory: 'all',
+                sortBy: 'default',
+                isAnimated: false,
+                
+                categories: [
+                    { id: 'all', name: 'All' },
+                    { id: 'everyday', name: 'Everyday' },
+                    { id: 'vehicles', name: 'Vehicles' },
+                    { id: 'luxury', name: 'Luxury' },
+                    { id: 'tech', name: 'Tech & Space' },
+                    { id: 'business', name: 'Business' }
+                ],
+
+                products: [
+                    { id: 1, name: 'Coffee', category: 'everyday', categoryName: 'Everyday', price: 5, description: 'Fresh artisan coffee.', image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80' },
+                    { id: 2, name: 'Movie Ticket', category: 'everyday', categoryName: 'Everyday', price: 15, description: 'Cinema ticket with popcorn.', image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=400&q=80' },
+                    { id: 3, name: 'Headphones', category: 'everyday', categoryName: 'Everyday', price: 350, description: 'Noise-cancelling wireless.', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=400&q=80' },
+                    { id: 4, name: 'Smartphone', category: 'everyday', categoryName: 'Everyday', price: 1200, description: 'Latest flagship phone.', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=400&q=80' },
+                    { id: 5, name: 'Laptop', category: 'everyday', categoryName: 'Everyday', price: 2000, description: 'High-performance laptop.', image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80' },
+                    { id: 6, name: 'Luxury Watch', category: 'everyday', categoryName: 'Everyday', price: 25000, description: 'Swiss automatic timepiece.', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=80' },
+
+                    { id: 7, name: 'Electric Bicycle', category: 'vehicles', categoryName: 'Vehicles', price: 2000, description: 'Fast urban e-bike.', image: 'https://images.unsplash.com/photo-1571068316344-75bc76f77890?auto=format&fit=crop&w=400&q=80' },
+                    { id: 8, name: 'Tesla Model S', category: 'vehicles', categoryName: 'Vehicles', price: 95000, description: 'Plaid edition electric sedan.', image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=400&q=80' },
+                    { id: 9, name: 'Supercar', category: 'vehicles', categoryName: 'Vehicles', price: 3000000, description: 'Italian engineered supercar.', image: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=400&q=80' },
+                    { id: 10, name: 'Private Helicopter', category: 'vehicles', categoryName: 'Vehicles', price: 8000000, description: 'Twin-engine executive copter.', image: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=400&q=80' },
+                    { id: 11, name: 'Private Jet', category: 'vehicles', categoryName: 'Vehicles', price: 75000000, description: 'Long-range jet.', image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=400&q=80' },
+
+                    { id: 12, name: 'Luxury Mansion', category: 'luxury', categoryName: 'Luxury', price: 25000000, description: 'Cliffside modern villa.', image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=400&q=80' },
+                    { id: 13, name: 'Private Island', category: 'luxury', categoryName: 'Luxury', price: 50000000, description: 'Tropical island beach.', image: 'https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?auto=format&fit=crop&w=400&q=80' },
+                    { id: 14, name: 'Luxury Yacht', category: 'luxury', categoryName: 'Luxury', price: 100000000, description: 'Superyacht with helipad.', image: 'https://images.unsplash.com/photo-1569263979104-865ab9cd8d5c?auto=format&fit=crop&w=400&q=80' },
+                    { id: 15, name: 'Superyacht', category: 'luxury', categoryName: 'Luxury', price: 300000000, description: 'Mega yacht with pool.', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=400&q=80' },
+
+                    { id: 16, name: 'Humanoid Robot', category: 'tech', categoryName: 'Tech & Space', price: 30000, description: 'Autonomous android.', image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=400&q=80' },
+                    { id: 17, name: 'AI Server Cluster', category: 'tech', categoryName: 'Tech & Space', price: 250000, description: 'High-end GPUs for AI.', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=400&q=80' },
+                    { id: 18, name: 'Communications Satellite', category: 'tech', categoryName: 'Tech & Space', price: 50000000, description: 'Orbit broadband satellite.', image: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=400&q=80' },
+                    { id: 19, name: 'Rocket Launch', category: 'tech', categoryName: 'Tech & Space', price: 70000000, description: 'Orbital class booster.', image: 'https://images.unsplash.com/photo-1517976487542-f81d1136b69b?auto=format&fit=crop&w=400&q=80' },
+                    { id: 20, name: 'Space Tourism Flight', category: 'tech', categoryName: 'Tech & Space', price: 100000000, description: 'Passenger edge of space.', image: 'https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=400&q=80' },
+
+                    { id: 21, name: 'Tech Startup', category: 'business', categoryName: 'Business', price: 5000000, description: 'Early stage software firm.', image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80' },
+                    { id: 22, name: 'Private Tech Firm', category: 'business', categoryName: 'Business', price: 500000000, description: 'Robotics firm acquisition.', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=400&q=80' },
+                    { id: 23, name: 'Downtown Skyscraper', category: 'business', categoryName: 'Business', price: 1000000000, description: 'Commercial office tower.', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=400&q=80' },
+                    { id: 24, name: 'Pro Sports Team', category: 'business', categoryName: 'Business', price: 2000000000, description: 'Major league franchise.', image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=400&q=80' }
+                ],
+
+                init() {
+                    const saved = localStorage.getItem('dhirendra_musk_game');
+                    if (saved) {
+                        try {
+                            const data = JSON.parse(saved);
+                            this.balance = data.balance;
+                            this.totalSpent = data.totalSpent;
+                            this.inventory = data.inventory || {};
+                        } catch(e) { console.error(e); }
+                    }
+                },
+
+                saveState() {
+                    localStorage.setItem('dhirendra_musk_game', JSON.stringify({
+                        balance: this.balance,
+                        totalSpent: this.totalSpent,
+                        inventory: this.inventory
+                    }));
+                },
+
+                formatMoney(amount) {
+                    return '$' + Number(amount).toLocaleString('en-US');
+                },
+
+                getQuantity(id) {
+                    return this.inventory[id] || 0;
+                },
+
+                buyItem(product) {
+                    if (this.balance >= product.price) {
+                        this.balance -= product.price;
+                        this.totalSpent += product.price;
+                        this.inventory[product.id] = (this.inventory[product.id] || 0) + 1;
+                        this.triggerFlash();
+                        this.saveState();
+                    }
+                },
+
+                sellItem(product) {
+                    if (this.getQuantity(product.id) > 0) {
+                        this.balance += product.price;
+                        this.totalSpent -= product.price;
+                        this.inventory[product.id] -= 1;
+                        if (this.inventory[product.id] <= 0) {
+                            delete this.inventory[product.id];
+                        }
+                        this.triggerFlash();
+                        this.saveState();
+                    }
+                },
+
+                setQuantity(product, val) {
+                    let newQty = parseInt(val);
+                    if (isNaN(newQty) || newQty < 0) newQty = 0;
+                    const currentQty = this.getQuantity(product.id);
+                    const diff = newQty - currentQty;
+                    
+                    if (diff > 0) {
+                        const cost = diff * product.price;
+                        if (this.balance >= cost) {
+                            this.balance -= cost;
+                            this.totalSpent += cost;
+                            this.inventory[product.id] = newQty;
+                        } else {
+                            alert("Not enough money in Elon's fortune!");
+                        }
+                    } else if (diff < 0) {
+                        const refund = Math.abs(diff) * product.price;
+                        this.balance += refund;
+                        this.totalSpent -= refund;
+                        this.inventory[product.id] = newQty;
+                        if (this.inventory[product.id] <= 0) {
+                            delete this.inventory[product.id];
+                        }
+                    }
+                    this.saveState();
+                },
+
+                triggerFlash() {
+                    this.isAnimated = true;
+                    setTimeout(() => { this.isAnimated = false; }, 300);
+                },
+
+                confirmReset() {
+                    if (confirm("Are you sure you want to reset your game?")) {
+                        this.balance = this.startingBalance;
+                        this.totalSpent = 0;
+                        this.inventory = {};
+                        localStorage.removeItem('dhirendra_musk_game');
+                    }
+                },
+
+                shareResult() {
+                    const text = `I spent ${this.formatMoney(this.totalSpent)} out of Elon Musk's $500 Billion fortune on DHIRENDRA.FUN!`;
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(text);
+                        alert("Result copied to clipboard!");
+                    } else {
+                        alert(text);
+                    }
+                },
+
+                get totalItemsCount() {
+                    return Object.values(this.inventory).reduce((a, b) => a + b, 0);
+                },
+
+                get cartItems() {
+                    return Object.keys(this.inventory).map(id => {
+                        const product = this.products.find(p => p.id == id);
+                        return {
+                            ...product,
+                            qty: this.inventory[id]
+                        };
+                    });
+                },
+
+                get filteredProducts() {
+                    let result = this.products.filter(p => {
+                        const matchesCategory = this.selectedCategory === 'all' || p.category === this.selectedCategory;
+                        const matchesSearch = p.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+                        return matchesCategory && matchesSearch;
+                    });
+
+                    if (this.sortBy === 'price-asc') {
+                        result.sort((a, b) => a.price - b.price);
+                    } else if (this.sortBy === 'price-desc') {
+                        result.sort((a, b) => b.price - a.price);
+                    } else if (this.sortBy === 'name-asc') {
+                        result.sort((a, b) => a.name.localeCompare(b.name));
+                    }
+
+                    return result;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
